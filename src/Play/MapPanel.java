@@ -1,3 +1,5 @@
+package Play;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -93,17 +95,17 @@ public class MapPanel extends JPanel implements KeyListener {
 
     private void loadImage() {
         // 获取当前类对应相对位置image文件夹下的地板图像
-        ImageIcon icon = new ImageIcon(getClass().getResource("images/floor.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("Picture/floor.png"));
         // 将地板图像实例赋给floorImage变量
         floorImage = icon.getImage();
         // 获取墙体图像
-        icon = new ImageIcon(getClass().getResource("images/wall.gif"));
+        icon = new ImageIcon(getClass().getResource("Picture/wall.gif"));
         wallImage = icon.getImage();
         // 获取英雄图像
-        icon = new ImageIcon(getClass().getResource("images/hero.png"));
+        icon = new ImageIcon(getClass().getResource("Picture/hero.png"));
         heroImage = icon.getImage();
         // 获取终点图像
-        icon = new ImageIcon(getClass().getResource("images/end.png"));
+        icon = new ImageIcon(getClass().getResource("Picture/end.png"));
         endImage = icon.getImage();
     }
 
@@ -247,5 +249,10 @@ public class MapPanel extends JPanel implements KeyListener {
         // 2表示终点图像
         // 注意：x坐标表示第几列，y坐标表示第几行，所以是map[y][x]而不是map[x][y]
         return map[y][x] == END;
+    }
+
+    private byte[][] BackTracker(int COLUMN,int Row){
+        byte[][] ret=new byte[COLUMN][Row];
+        return ret;
     }
 }

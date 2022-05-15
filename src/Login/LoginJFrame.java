@@ -1,3 +1,7 @@
+package Login;
+
+import Play.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,14 +38,12 @@ public class LoginJFrame extends JFrame {
         if(Login.start(username,password)){
             this.dispose();
             bl=true;
-            if(bl) {
-            MainApp app = new MainApp();
+            Maze app = new Maze(15,15,0);
             // 允许窗体关闭操作
             app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             // 显示窗体
             app.setVisible(true);
             app.setLocationRelativeTo(null);//居中
-        }
         }else{
             JOptionPane.showMessageDialog(this, "账号密码错误");
         }
