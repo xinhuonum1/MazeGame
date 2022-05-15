@@ -1,15 +1,21 @@
 package Play;
 
+import Play.Model.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Stack;
 
 
 public class MapPanel extends JPanel implements KeyListener {
     // 窗体的宽和高
 //    private static final int WIDTH = 600;
 //    private static final int HEIGHT = 600;
+    private Maze maze;
     private int WIDTH=600;
     private int HEIGHT=600;
     // 设定背景方格默认行数和列数
@@ -24,23 +30,23 @@ public class MapPanel extends JPanel implements KeyListener {
     private static final byte FLOOR = 0;// 0表示通道地板
     private static final byte WALL = 1;// 1表示墙
     private static final byte END = 2;// 2表示终点
-    private byte[][] map = {
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-            {1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-            {1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1},
-            {1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1},
-            {1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-            {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-            {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1}
-    };//设计算法，生成矩阵，回溯
+//    private byte[][] map = {
+//            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//            {1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+//            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+//            {1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+//            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+//            {1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1},
+//            {1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1},
+//            {1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+//            {1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1},
+//            {1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1},
+//            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+//            {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+//            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+//            {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+//            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1}
+//    };//设计算法，生成矩阵，回溯
 
     // 设定显示的图像对象
     private Image floorImage;
@@ -62,6 +68,8 @@ public class MapPanel extends JPanel implements KeyListener {
         this.ROW=ROW;
         this.WIDTH=COLUMN*SIZE;
         this.HEIGHT=ROW*SIZE;
+        maze=new Maze(7,7);
+        Maze.Init();
         // 设定面板大小
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         // 加载图片
@@ -117,8 +125,8 @@ public class MapPanel extends JPanel implements KeyListener {
      */
     private void drawMap(Graphics g) {
         for (int i = 0; i < ROW; i++) {
-            for (int j = 0; j < COLUMN; j++) {
-                switch (map[i][j]) {
+            for(int j=0;j<COLUMN;j++) {
+                switch (Maze.map[i][j]) {
                     case 0:
                         // 标记为0时画出地板，在指定位置加载图像
                         g.drawImage(floorImage, j * SIZE, i * SIZE, this);
@@ -132,6 +140,7 @@ public class MapPanel extends JPanel implements KeyListener {
                         g.drawImage(endImage, j * SIZE, i * SIZE, SIZE, SIZE, this);
                     default:
                         break;
+
                 }
             }
         }
@@ -202,7 +211,7 @@ public class MapPanel extends JPanel implements KeyListener {
         // 以判断(x,y)是WALL还是FLOOR来作为是否能移动的根据
         // 1表示墙，不能移动；0表示地板，可以移动
         if (x < COLUMN && y < ROW) {// 进行参数校验，不能超过数组的长度
-            return map[y][x] != 1;
+            return Maze.map[y][x] != 1;
         }
         return false;
     }
@@ -248,11 +257,7 @@ public class MapPanel extends JPanel implements KeyListener {
     private boolean isFinish(int x, int y) {
         // 2表示终点图像
         // 注意：x坐标表示第几列，y坐标表示第几行，所以是map[y][x]而不是map[x][y]
-        return map[y][x] == END;
+        return Maze.map[y][x] == END;
     }
 
-    private byte[][] BackTracker(int COLUMN,int Row){
-        byte[][] ret=new byte[COLUMN][Row];
-        return ret;
-    }
 }

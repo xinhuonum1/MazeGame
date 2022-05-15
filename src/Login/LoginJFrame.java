@@ -1,15 +1,16 @@
 package Login;
 
+import Play.BeginPlay;
 import Play.Maze;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class LoginJFrame extends JFrame {
-    public static boolean bl=false;
-    JTextField textField1=new JTextField(20);
-    JTextField textField2=new JTextField(20);
-    JButton button=new JButton("点击登录");
+    private static boolean bl=false;
+    private JTextField textField1=new JTextField(20);
+    private JTextField textField2=new JTextField(20);
+    private JButton button=new JButton("点击登录");
     public LoginJFrame(String name){
         super(name);
         JPanel root=new JPanel();
@@ -38,12 +39,13 @@ public class LoginJFrame extends JFrame {
         if(Login.start(username,password)){
             this.dispose();
             bl=true;
-            Maze app = new Maze(15,15,0);
+            BeginPlay BP=new BeginPlay();
+            BP.Begin(15,15);
             // 允许窗体关闭操作
-            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            // 显示窗体
-            app.setVisible(true);
-            app.setLocationRelativeTo(null);//居中
+//            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            // 显示窗体
+//            app.setVisible(true);
+//            app.setLocationRelativeTo(null);//居中
         }else{
             JOptionPane.showMessageDialog(this, "账号密码错误");
         }
