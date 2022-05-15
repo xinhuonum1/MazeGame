@@ -3,19 +3,20 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/**
- * @author lcl100
- * @create 2021-06-11 22:27
- */
+
 public class MapPanel extends JPanel implements KeyListener {
     // 窗体的宽和高
-    private static final int WIDTH = 450;
-    private static final int HEIGHT = 450;
+//    private static final int WIDTH = 600;
+//    private static final int HEIGHT = 600;
+    private int WIDTH=600;
+    private int HEIGHT=600;
     // 设定背景方格默认行数和列数
-    private static final int ROW = 15;
-    private static final int COLUMN = 15;
+//    private static final int ROW = 15;
+//    private static final int COLUMN = 15;
+    private int COLUMN=15;
+    private int ROW=15;
     // 设置窗体单个图像，采用30x30大小的图形，一行设置15个，即450像素，即窗体默认大小
-    private static final int SIZE = 30;
+    private static final int SIZE = 40;
 
     // 设定迷宫地图
     private static final byte FLOOR = 0;// 0表示通道地板
@@ -37,7 +38,7 @@ public class MapPanel extends JPanel implements KeyListener {
             {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
             {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1}
-    };
+    };//设计算法，生成矩阵，回溯
 
     // 设定显示的图像对象
     private Image floorImage;
@@ -54,7 +55,11 @@ public class MapPanel extends JPanel implements KeyListener {
     private static final byte UP = 2;
     private static final byte DOWN = 3;
 
-    public MapPanel() {
+    public MapPanel(int COLUMN,int ROW) {
+        this.COLUMN=COLUMN;
+        this.ROW=ROW;
+        this.WIDTH=COLUMN*SIZE;
+        this.HEIGHT=ROW*SIZE;
         // 设定面板大小
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         // 加载图片
