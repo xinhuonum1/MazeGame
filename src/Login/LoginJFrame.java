@@ -11,6 +11,7 @@ public class LoginJFrame extends JFrame {
     private JTextField textField1=new JTextField(20);
     private JTextField textField2=new JTextField(20);
     private JButton button=new JButton("点击登录");
+    private JButton button2=new JButton("点击注册");
     public LoginJFrame(String name){
         super(name);
         JPanel root=new JPanel();
@@ -23,15 +24,26 @@ public class LoginJFrame extends JFrame {
         textField1.setPreferredSize(new Dimension(100,50));
         textField2.setPreferredSize(new Dimension(100,50));
         root.add(button);
+        root.add(button2);
         button.addActionListener((e)->{
             login();
         });
+        button2.addActionListener((e)->{register();});
     }
     public boolean Judge(){
 //        button.addActionListener((e)->{
 //            login();
 //        });
         return bl;
+    }
+    private void register(){
+        String username=textField1.getText();
+        String password=textField2.getText();
+        if(Register.start(username,password)=="注册成功"){
+            JOptionPane.showMessageDialog(this, "注册成功");
+        }else if(Register.start(username,password)=="账号已存在"){
+            JOptionPane.showMessageDialog(this, "账号已存在，请换一个名称");
+        }
     }
     private void login(){
         String username=textField1.getText();
@@ -40,7 +52,7 @@ public class LoginJFrame extends JFrame {
             this.dispose();
             bl=true;
             BeginPlay BP=new BeginPlay();
-            BP.Begin(15,15);
+            BP.Begin(31,31);
             // 允许窗体关闭操作
 //            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //            // 显示窗体

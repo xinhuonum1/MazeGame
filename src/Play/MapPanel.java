@@ -1,21 +1,18 @@
 package Play;
 
-import Play.Model.Maze;
+import Play.Model.MazeModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
 
 
 public class MapPanel extends JPanel implements KeyListener {
     // 窗体的宽和高
 //    private static final int WIDTH = 600;
 //    private static final int HEIGHT = 600;
-    private Maze maze;
+    private MazeModel maze;
     private int WIDTH=600;
     private int HEIGHT=600;
     // 设定背景方格默认行数和列数
@@ -63,13 +60,13 @@ public class MapPanel extends JPanel implements KeyListener {
     private static final byte UP = 2;
     private static final byte DOWN = 3;
 
-    public MapPanel(int COLUMN,int ROW) {
+    MapPanel(int COLUMN, int ROW) {
         this.COLUMN=COLUMN;
         this.ROW=ROW;
         this.WIDTH=COLUMN*SIZE;
         this.HEIGHT=ROW*SIZE;
-        maze=new Maze(7,7);
-        Maze.Init();
+        maze=new MazeModel(COLUMN/2,ROW/2);
+        MazeModel.Init();
         // 设定面板大小
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         // 加载图片
@@ -126,7 +123,7 @@ public class MapPanel extends JPanel implements KeyListener {
     private void drawMap(Graphics g) {
         for (int i = 0; i < ROW; i++) {
             for(int j=0;j<COLUMN;j++) {
-                switch (Maze.map[i][j]) {
+                switch (MazeModel.map[i][j]) {
                     case 0:
                         // 标记为0时画出地板，在指定位置加载图像
                         g.drawImage(floorImage, j * SIZE, i * SIZE, this);
@@ -211,7 +208,7 @@ public class MapPanel extends JPanel implements KeyListener {
         // 以判断(x,y)是WALL还是FLOOR来作为是否能移动的根据
         // 1表示墙，不能移动；0表示地板，可以移动
         if (x < COLUMN && y < ROW) {// 进行参数校验，不能超过数组的长度
-            return Maze.map[y][x] != 1;
+            return MazeModel.map[y][x] != 1;
         }
         return false;
     }
@@ -257,7 +254,7 @@ public class MapPanel extends JPanel implements KeyListener {
     private boolean isFinish(int x, int y) {
         // 2表示终点图像
         // 注意：x坐标表示第几列，y坐标表示第几行，所以是map[y][x]而不是map[x][y]
-        return Maze.map[y][x] == END;
+        return MazeModel.map[y][x] == END;
     }
 
 }

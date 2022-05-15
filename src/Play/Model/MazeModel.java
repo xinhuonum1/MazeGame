@@ -3,7 +3,7 @@ package Play.Model;
 
 import java.util.Random;
 
-public class Maze {
+public class MazeModel {
         // 初始化一个地图 默认所有路不通
         //最终产生的二维数组大小实际为(2width+1) * (2height+1)
         private static int width;
@@ -12,7 +12,7 @@ public class Maze {
         private static int r;
         private static int c;
 
-        public Maze(int r0, int c0) {
+        public MazeModel(int r0, int c0) {
             width = r0;
             height = c0;
             r = 2 * width + 1;
