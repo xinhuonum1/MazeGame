@@ -39,9 +39,9 @@ public class LoginJFrame extends JFrame {
     private void register(){
         String username=textField1.getText();
         String password=textField2.getText();
-        if(Register.start(username,password)=="注册成功"){
+        if(Register.start(username, password).equals("注册成功")){
             JOptionPane.showMessageDialog(this, "注册成功");
-        }else if(Register.start(username,password)=="账号已存在"){
+        }else if(Register.start(username, password).equals("账号已存在")){
             JOptionPane.showMessageDialog(this, "账号已存在，请换一个名称");
         }
     }

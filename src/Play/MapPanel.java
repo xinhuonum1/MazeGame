@@ -189,6 +189,8 @@ public class MapPanel extends JPanel implements KeyListener {
         if (isFinish(x, y)) {
             // 移动到出口
             JOptionPane.showMessageDialog(this, "恭喜通关！");
+            BeginPlay.hard++;
+            BeginPlay.ContinuePlay();
         }
     }
 
