@@ -65,7 +65,7 @@ public class MapPanel extends JPanel implements KeyListener {
         this.ROW=ROW;
         this.WIDTH=COLUMN*SIZE;
         this.HEIGHT=ROW*SIZE;
-        maze=new MazeModel(COLUMN/2,ROW/2);
+        maze=new MazeModel(ROW/2,COLUMN/2);
         MazeModel.Init();
         // 设定面板大小
         setPreferredSize(new Dimension(WIDTH, HEIGHT));

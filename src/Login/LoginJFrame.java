@@ -52,7 +52,7 @@ public class LoginJFrame extends JFrame {
             this.dispose();
             bl=true;
             BeginPlay BP=new BeginPlay();
-            BP.Begin(31,31);
+            BP.Begin(41,31);
             // 允许窗体关闭操作
 //            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //            // 显示窗体
