@@ -21,7 +21,7 @@ public class MapPanel extends JPanel implements KeyListener {
     private int COLUMN=15;
     private int ROW=15;
     // 设置窗体单个图像，采用30x30大小的图形，一行设置15个，即450像素，即窗体默认大小
-    private static final int SIZE = 40;
+    private static int SIZE = 40;
 
     // 设定迷宫地图
     private static final byte FLOOR = 0;// 0表示通道地板
@@ -53,6 +53,7 @@ public class MapPanel extends JPanel implements KeyListener {
 
     // 角色坐标
     private int x, y;
+    private int x1,y1;
 
     // 区分上下左右按键的移动
     private static final byte LEFT = 0;
@@ -61,11 +62,16 @@ public class MapPanel extends JPanel implements KeyListener {
     private static final byte DOWN = 3;
 
     MapPanel(int COLUMN, int ROW) {
-        this.COLUMN=COLUMN;
-        this.ROW=ROW;
-        this.WIDTH=COLUMN*SIZE;
-        this.HEIGHT=ROW*SIZE;
-        maze=new MazeModel(ROW/2,COLUMN/2);
+//        this.COLUMN=COLUMN;
+//        this.ROW=ROW;
+        this.COLUMN = Math.min(COLUMN, 71);
+        this.ROW = Math.min(ROW, 71);
+        if(COLUMN>50){
+            SIZE=20;
+        }
+        this.WIDTH=this.COLUMN*SIZE;
+        this.HEIGHT=this.ROW*SIZE;
+        maze=new MazeModel(this.ROW/2,this.COLUMN/2);
         MazeModel.Init();
         // 设定面板大小
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -74,28 +80,22 @@ public class MapPanel extends JPanel implements KeyListener {
         // 初始化角色坐标
         this.x = 1;
         this.y = 1;
+        this.x1=COLUMN-2;
+        this.y1=1;
         // 设定焦点在本窗体并且监听键盘事件
         setFocusable(true);
         addKeyListener(this);
     }
 
-    /**
-     * 画地图和角色
-     *
-     * @param g 画笔
-     */
+
     public void paintComponent(Graphics g) {
         drawMap(g);
         drawRole(g);
     }
 
-    /**
-     * 画角色（英雄）
-     *
-     * @param g 画笔
-     */
     private void drawRole(Graphics g) {
         g.drawImage(heroImage, x * SIZE, y * SIZE, SIZE, SIZE, this);
+        g.drawImage(heroImage, x1 * SIZE, y1 * SIZE, SIZE, SIZE, this);
     }
 
     private void loadImage() {
@@ -114,12 +114,6 @@ public class MapPanel extends JPanel implements KeyListener {
         endImage = icon.getImage();
     }
 
-    /**
-     * 根据map[i][j]中记录的地图信息绘制图案画出地图
-     * 标记0为地板，标记1为墙
-     *
-     * @param g
-     */
     private void drawMap(Graphics g) {
         for (int i = 0; i < ROW; i++) {
             for(int j=0;j<COLUMN;j++) {
@@ -158,28 +152,28 @@ public class MapPanel extends JPanel implements KeyListener {
                 move(LEFT);
                 break;
             case KeyEvent.VK_A:
-                move(LEFT);
+                move1(LEFT);
                 break;
             // 右方向键或'D'键，都可以右移
             case KeyEvent.VK_RIGHT:
                 move(RIGHT);
                 break;
             case KeyEvent.VK_D:
-                move(RIGHT);
+                move1(RIGHT);
                 break;
             // 上方向键或'W'键，都可以上移
             case KeyEvent.VK_UP:
                 move(UP);
                 break;
             case KeyEvent.VK_W:
-                move(UP);
+                move1(UP);
                 break;
             // 下方向键或'S'键，都可以下移
             case KeyEvent.VK_DOWN:
                 move(DOWN);
                 break;
             case KeyEvent.VK_S:
-                move(DOWN);
+                move1(DOWN);
                 break;
             default:
                 break;
@@ -199,13 +193,7 @@ public class MapPanel extends JPanel implements KeyListener {
 
     }
 
-    /**
-     * 判断是否允许移动，如果传入的坐标不是墙则可以移动
-     *
-     * @param x
-     * @param y
-     * @return 允许移动则返回true，否则返回false
-     */
+
     private boolean isAllowMove(int x, int y) {
         // 以判断(x,y)是WALL还是FLOOR来作为是否能移动的根据
         // 1表示墙，不能移动；0表示地板，可以移动
@@ -215,11 +203,7 @@ public class MapPanel extends JPanel implements KeyListener {
         return false;
     }
 
-    /**
-     * 移动角色人物
-     *
-     * @param event 传入移动方向，分别可以是LEFT、RIGHT、UP、DOWN
-     */
+
     private void move(int event) {
         switch (event) {
             case LEFT:// 左移
@@ -245,14 +229,32 @@ public class MapPanel extends JPanel implements KeyListener {
                 break;
         }
     }
+    private void move1(int event) {
+        switch (event) {
+            case LEFT:// 左移
+                if (isAllowMove(x1 - 1, y1)) {// 判断左移一步后的位置是否允许移动（不是墙就可以移动）
+                    x1--;
+                }
+                break;
+            case RIGHT:// 右移
+                if (isAllowMove(x1 + 1, y1)) {
+                    x1++;
+                }
+                break;
+            case UP:// 上移
+                if (isAllowMove(x1, y1 - 1)) {
+                    y1--;
+                }
+                break;
+            case DOWN:// 下移
+                if (isAllowMove(x1, y1 + 1)) {
+                    y1++;
+                }
+            default:
+                break;
+        }
+    }
 
-    /**
-     * 传入人物的坐标来判断是否到达终点
-     *
-     * @param x
-     * @param y
-     * @return
-     */
     private boolean isFinish(int x, int y) {
         // 2表示终点图像
         // 注意：x坐标表示第几列，y坐标表示第几行，所以是map[y][x]而不是map[x][y]

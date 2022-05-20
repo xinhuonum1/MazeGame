@@ -21,10 +21,11 @@ public class Register {
             if(rs.next()) {
                 return "账号已存在";
             }else{
-                String sql1="insert into java(username,password) values (?,?)";
+                String sql1="insert into java(username,password,max) values (?,?,?)";
                 ps=conn.prepareStatement(sql1);
                 ps.setString(1,username);
                 ps.setString(2,password);
+                ps.setInt(3,0);
                 int i=ps.executeUpdate();
                 if(i>0){
                     return "注册成功";

@@ -1,5 +1,6 @@
 package Login;
 
+import Play.BeginPlay;
 import Tool.Mysql;
 
 import java.sql.Connection;
@@ -14,13 +15,15 @@ public class Login {
         ResultSet rs = null;
         try {
             conn = Mysql.getConnection();
-            String sql = "select password from java where username=?";
+            String sql = "select password,max from java where username=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, username);
             rs = ps.executeQuery();
            if(rs.next()) {
                 String password1=rs.getString(1);
+                int max=rs.getInt(2);
                 if(password.equals(password1))
+                    BeginPlay.hardinDatabase=max;
                     return true;
             }
         } catch (Exception e) {

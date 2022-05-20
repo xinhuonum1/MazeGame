@@ -5,6 +5,7 @@ import javax.swing.*;
 public class BeginPlay {
     private static Maze maze;
     public static int hard=0;
+    public static int hardinDatabase=0;
     private static int x;
     private static int y;
     public void Begin(int x,int y){

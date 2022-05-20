@@ -51,8 +51,14 @@ public class LoginJFrame extends JFrame {
         if(Login.start(username,password)){
             this.dispose();
             bl=true;
-            BeginPlay BP=new BeginPlay();
-            BP.Begin(41,31);
+            Menu menu=new Menu("菜单");
+            menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            menu.setSize(1500,1000);
+            menu.setVisible(true);
+            menu.setLocationRelativeTo(null);
+
+//            BeginPlay BP=new BeginPlay();
+//            BP.Begin(41,31);
             // 允许窗体关闭操作
 //            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //            // 显示窗体
