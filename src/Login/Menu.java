@@ -6,9 +6,10 @@ import javax.swing.*;
 
 
 public class Menu extends JFrame {
-    private JButton button=new JButton("新游戏");
+    private JButton button=new JButton("单人游戏");
     private JButton button1=new JButton("排行榜");
     private JButton button2=new JButton("继续游戏");
+    private JButton button3=new JButton("双人游戏");
 
     public Menu(String name){
         super(name);
@@ -17,20 +18,27 @@ public class Menu extends JFrame {
         root.add(button);
         root.add(button1);
         root.add(button2);
-        button.addActionListener((e)->{ newPlay();});
+        root.add(button3);
+        button.addActionListener((e)->{ newPlay();this.dispose();});
         button1.addActionListener((e)->{ Rank();});
-        button2.addActionListener((e)->{continueGame();});
+        button2.addActionListener((e)->{continueGame();this.dispose();});
+        button3.addActionListener((e)->{Doubleplay();this.dispose();});
     }
     private void newPlay(){
         BeginPlay BP=new BeginPlay();
-        BP.Begin(41,31);
+        BP.Begin(11,11);
 }
     private void continueGame(){
         BeginPlay.hard=BeginPlay.hardinDatabase;
         BeginPlay BP=new BeginPlay();
-        BP.Begin(41,31);
+        BP.Begin(11,11);
     }
     private void Rank(){
-        rank rank=new rank();
+        Rank rank=new Rank();
+        rank.setLocationRelativeTo(null);
+    }
+    private void Doubleplay(){
+        BeginPlay BP=new BeginPlay();
+        BP.BeginDouble(31,21);
     }
 }

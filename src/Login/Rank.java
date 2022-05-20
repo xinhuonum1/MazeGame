@@ -5,7 +5,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-public class rank extends JFrame{
+public class Rank extends JFrame{
 
     static {
         try
@@ -30,7 +30,7 @@ public class rank extends JFrame{
     private JButton btnShow;
     private JButton bt1;
     private JButton bt2;
-    public rank()
+    public Rank()
     {
         super("排行榜");		//JFrame的标题名称
         this.setSize(660,600);		//控制窗体大小
@@ -87,7 +87,7 @@ public class rank extends JFrame{
             String username = "root";
             String passwords = "20020803Aa";
             Connection conn=DriverManager.getConnection(url, username, passwords);
-            String sql = "select username,max from rank1  order by max desc limit 10;";
+            String sql = "select username,max from java  order by max desc limit 10;";
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
             int count = 0;

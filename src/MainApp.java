@@ -1,8 +1,6 @@
 import Login.LoginJFrame;
-import Play.MapPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MainApp extends JFrame {
 //    public MainApp(){

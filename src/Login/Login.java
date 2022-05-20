@@ -24,6 +24,7 @@ public class Login {
                 int max=rs.getInt(2);
                 if(password.equals(password1))
                     BeginPlay.hardinDatabase=max;
+                    BeginPlay.username=username;
                     return true;
             }
         } catch (Exception e) {

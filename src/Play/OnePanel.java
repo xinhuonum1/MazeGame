@@ -7,8 +7,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
-public class MapPanel extends JPanel implements KeyListener {
+public class OnePanel extends JPanel implements KeyListener {
     // 窗体的宽和高
 //    private static final int WIDTH = 600;
 //    private static final int HEIGHT = 600;
@@ -27,25 +26,6 @@ public class MapPanel extends JPanel implements KeyListener {
     private static final byte FLOOR = 0;// 0表示通道地板
     private static final byte WALL = 1;// 1表示墙
     private static final byte END = 2;// 2表示终点
-//    private byte[][] map = {
-//            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//            {1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-//            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-//            {1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-//            {1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-//            {1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1},
-//            {1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-//            {1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1},
-//            {1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1},
-//            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-//            {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-//            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-//            {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-//            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1}
-//    };//设计算法，生成矩阵，回溯
-
-    // 设定显示的图像对象
     private Image floorImage;
     private Image wallImage;
     private Image heroImage;
@@ -53,7 +33,7 @@ public class MapPanel extends JPanel implements KeyListener {
 
     // 角色坐标
     private int x, y;
-    private int x1,y1;
+
 
     // 区分上下左右按键的移动
     private static final byte LEFT = 0;
@@ -61,7 +41,7 @@ public class MapPanel extends JPanel implements KeyListener {
     private static final byte UP = 2;
     private static final byte DOWN = 3;
 
-    MapPanel(int COLUMN, int ROW) {
+    OnePanel(int COLUMN, int ROW) {
 //        this.COLUMN=COLUMN;
 //        this.ROW=ROW;
         this.COLUMN = Math.min(COLUMN, 71);
@@ -80,8 +60,6 @@ public class MapPanel extends JPanel implements KeyListener {
         // 初始化角色坐标
         this.x = 1;
         this.y = 1;
-        this.x1=COLUMN-2;
-        this.y1=1;
         // 设定焦点在本窗体并且监听键盘事件
         setFocusable(true);
         addKeyListener(this);
@@ -95,7 +73,6 @@ public class MapPanel extends JPanel implements KeyListener {
 
     private void drawRole(Graphics g) {
         g.drawImage(heroImage, x * SIZE, y * SIZE, SIZE, SIZE, this);
-        g.drawImage(heroImage, x1 * SIZE, y1 * SIZE, SIZE, SIZE, this);
     }
 
     private void loadImage() {
@@ -151,30 +128,34 @@ public class MapPanel extends JPanel implements KeyListener {
             case KeyEvent.VK_LEFT:
                 move(LEFT);
                 break;
-            case KeyEvent.VK_A:
-                move1(LEFT);
-                break;
+//            case KeyEvent.VK_A:
+//                move1(LEFT);
+//                break;
             // 右方向键或'D'键，都可以右移
             case KeyEvent.VK_RIGHT:
                 move(RIGHT);
                 break;
-            case KeyEvent.VK_D:
-                move1(RIGHT);
-                break;
+//            case KeyEvent.VK_D:
+//                move1(RIGHT);
+//                break;
             // 上方向键或'W'键，都可以上移
             case KeyEvent.VK_UP:
                 move(UP);
                 break;
-            case KeyEvent.VK_W:
-                move1(UP);
-                break;
+//            case KeyEvent.VK_W:
+//                move1(UP);
+//                break;
             // 下方向键或'S'键，都可以下移
             case KeyEvent.VK_DOWN:
                 move(DOWN);
                 break;
-            case KeyEvent.VK_S:
-                move1(DOWN);
+//            case KeyEvent.VK_S:
+//                move1(DOWN);
+//                break;
+            case KeyEvent.VK_P:
+                BeginPlay.OnereturnMenu();
                 break;
+
             default:
                 break;
         }
@@ -229,36 +210,35 @@ public class MapPanel extends JPanel implements KeyListener {
                 break;
         }
     }
-    private void move1(int event) {
-        switch (event) {
-            case LEFT:// 左移
-                if (isAllowMove(x1 - 1, y1)) {// 判断左移一步后的位置是否允许移动（不是墙就可以移动）
-                    x1--;
-                }
-                break;
-            case RIGHT:// 右移
-                if (isAllowMove(x1 + 1, y1)) {
-                    x1++;
-                }
-                break;
-            case UP:// 上移
-                if (isAllowMove(x1, y1 - 1)) {
-                    y1--;
-                }
-                break;
-            case DOWN:// 下移
-                if (isAllowMove(x1, y1 + 1)) {
-                    y1++;
-                }
-            default:
-                break;
-        }
-    }
+//    private void move1(int event) {
+//        switch (event) {
+//            case LEFT:// 左移
+//                if (isAllowMove(x1 - 1, y1)) {// 判断左移一步后的位置是否允许移动（不是墙就可以移动）
+//                    x1--;
+//                }
+//                break;
+//            case RIGHT:// 右移
+//                if (isAllowMove(x1 + 1, y1)) {
+//                    x1++;
+//                }
+//                break;
+//            case UP:// 上移
+//                if (isAllowMove(x1, y1 - 1)) {
+//                    y1--;
+//                }
+//                break;
+//            case DOWN:// 下移
+//                if (isAllowMove(x1, y1 + 1)) {
+//                    y1++;
+//                }
+//            default:
+//                break;
+//        }
+//    }
 
     private boolean isFinish(int x, int y) {
         // 2表示终点图像
         // 注意：x坐标表示第几列，y坐标表示第几行，所以是map[y][x]而不是map[x][y]
         return MazeModel.map[y][x] == END;
     }
-
 }
