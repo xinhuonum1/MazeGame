@@ -49,6 +49,7 @@ public class DoublePanel extends JPanel implements KeyListener {
     private Image floorImage;
     private Image wallImage;
     private Image heroImage;
+    private Image heroImage1;
     private Image endImage;
 
     // 角色坐标
@@ -95,7 +96,7 @@ public class DoublePanel extends JPanel implements KeyListener {
 
     private void drawRole(Graphics g) {
         g.drawImage(heroImage, x * SIZE, y * SIZE, SIZE, SIZE, this);
-        g.drawImage(heroImage, x1 * SIZE, y1 * SIZE, SIZE, SIZE, this);
+        g.drawImage(heroImage1, x1 * SIZE, y1 * SIZE, SIZE, SIZE, this);
     }
 
     private void loadImage() {
@@ -104,13 +105,15 @@ public class DoublePanel extends JPanel implements KeyListener {
         // 将地板图像实例赋给floorImage变量
         floorImage = icon.getImage();
         // 获取墙体图像
-        icon = new ImageIcon(getClass().getResource("Picture/wall.gif"));
+        icon = new ImageIcon(getClass().getResource("Picture/wall(1).png"));
         wallImage = icon.getImage();
         // 获取英雄图像
-        icon = new ImageIcon(getClass().getResource("Picture/hero.png"));
+        icon = new ImageIcon(getClass().getResource("Picture/shadouxing.png"));
         heroImage = icon.getImage();
+        icon = new ImageIcon(getClass().getResource("Picture/lei.png"));
+        heroImage1 = icon.getImage();
         // 获取终点图像
-        icon = new ImageIcon(getClass().getResource("Picture/end.png"));
+        icon = new ImageIcon(getClass().getResource("Picture/yuanshi.png"));
         endImage = icon.getImage();
     }
 

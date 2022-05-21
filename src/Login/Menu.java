@@ -26,7 +26,7 @@ public class Menu extends JFrame {
     }
     private void newPlay(){
         BeginPlay BP=new BeginPlay();
-        BP.Begin(11,11);
+        BP.Begin(31,31);
 }
     private void continueGame(){
         BeginPlay.hard=BeginPlay.hardinDatabase;

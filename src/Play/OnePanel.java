@@ -81,13 +81,13 @@ public class OnePanel extends JPanel implements KeyListener {
         // 将地板图像实例赋给floorImage变量
         floorImage = icon.getImage();
         // 获取墙体图像
-        icon = new ImageIcon(getClass().getResource("Picture/wall.gif"));
+        icon = new ImageIcon(getClass().getResource("Picture/wall(1).png"));
         wallImage = icon.getImage();
         // 获取英雄图像
-        icon = new ImageIcon(getClass().getResource("Picture/hero.png"));
+        icon = new ImageIcon(getClass().getResource("Picture/shadouxing.png"));
         heroImage = icon.getImage();
         // 获取终点图像
-        icon = new ImageIcon(getClass().getResource("Picture/end.png"));
+        icon = new ImageIcon(getClass().getResource("Picture/yuanshi.png"));
         endImage = icon.getImage();
     }
 
@@ -210,31 +210,7 @@ public class OnePanel extends JPanel implements KeyListener {
                 break;
         }
     }
-//    private void move1(int event) {
-//        switch (event) {
-//            case LEFT:// 左移
-//                if (isAllowMove(x1 - 1, y1)) {// 判断左移一步后的位置是否允许移动（不是墙就可以移动）
-//                    x1--;
-//                }
-//                break;
-//            case RIGHT:// 右移
-//                if (isAllowMove(x1 + 1, y1)) {
-//                    x1++;
-//                }
-//                break;
-//            case UP:// 上移
-//                if (isAllowMove(x1, y1 - 1)) {
-//                    y1--;
-//                }
-//                break;
-//            case DOWN:// 下移
-//                if (isAllowMove(x1, y1 + 1)) {
-//                    y1++;
-//                }
-//            default:
-//                break;
-//        }
-//    }
+
 
     private boolean isFinish(int x, int y) {
         // 2表示终点图像
